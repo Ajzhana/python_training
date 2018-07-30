@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
+from contact import contact
 
 def is_alert_present(wd):
     try:
@@ -20,8 +21,8 @@ class test_add_contact (unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, "admin", "secret")
         self.init_contact_creation(wd)
-        self.fill_group_form(wd, "1233", "1232323", "dftt", "wddfdf", "89655885558", "dfrfrfff", "855885485", "dddddd",
-                             "weeerdddd")
+        self.fill_group_form(wd, contact(firstname="1233", middlename="1232323", lastname="dftt", company="wddfdf", home="89655885558", address="dfrfrfff", mobile="855885485", email="dddddd",
+                             address2="weeerdddd"))
         self.submit_form_creation(wd)
         self.logout(wd)
 
@@ -31,34 +32,34 @@ class test_add_contact (unittest.TestCase):
     def submit_form_creation(self, wd):
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def fill_group_form(self, wd, firstname, middlename, lastname, company, home, address, mobile, email, address2):
+    def fill_group_form(self, wd, contact):
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(firstname)
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(middlename)
+        wd.find_element_by_name("middlename").send_keys(contact.middlename)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(lastname)
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(company)
+        wd.find_element_by_name("company").send_keys(contact.company)
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address)
+        wd.find_element_by_name("address").send_keys(contact.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(home)
+        wd.find_element_by_name("home").send_keys(contact.home)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(mobile)
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(email)
+        wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_name("address2").click()
         wd.find_element_by_name("address2").clear()
-        wd.find_element_by_name("address2").send_keys(address2)
+        wd.find_element_by_name("address2").send_keys(contact.address2)
 
     def init_contact_creation(self, wd):
         wd.find_element_by_link_text("add new").click()
