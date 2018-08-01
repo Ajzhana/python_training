@@ -11,9 +11,7 @@ class ContactHelper:
 
     def edit_contact(self, contact):
         wd = self.app.wd
-        # init_update
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
-        # update_contact
+        self.init_update()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -26,8 +24,20 @@ class ContactHelper:
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(contact.company)
-        # submit_update
+        self.submit_update()
+
+    def init_update(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+
+    def submit_update(self):
+        wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+
+    def delete_contact(self):
+        wd = self.app.wd
+        self.init_update()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
 
 
     def fill_form(self, contact):
