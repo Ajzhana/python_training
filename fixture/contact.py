@@ -2,15 +2,15 @@
 
 class ContactHelper:
 
-    def __init__(self, manager):
-        self.manager = manager
+    def __init__(self, app):
+        self.app = app
 
     def submit_form_creation(self):
-        wd = self.manager.app.wd
+        wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def fill_form(self, contact):
-        wd = self.manager.app.wd
+        wd = self.app.wd
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -41,5 +41,5 @@ class ContactHelper:
         self.submit_form_creation()
 
     def init_contact_creation(self):
-        wd = self.manager.app.wd
+        wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
