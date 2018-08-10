@@ -12,7 +12,8 @@ class ContactHelper:
 
     def return_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if not (len(wd.find_elements_by_xpath("//div[@id='content']/form[2]/div[1]/input")) > 0):
+            wd.find_element_by_link_text("home page").click()
 
     def edit_contact(self, new_contact_data):
         wd = self.app.wd
