@@ -8,12 +8,18 @@ class ContactHelper:
     def submit_form_creation(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_home_page()
+
+    def return_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home page").click()
 
     def edit_contact(self, new_contact_data):
         wd = self.app.wd
         self.init_update()
         self.fill_form(new_contact_data)
         self.submit_update()
+        self.return_home_page()
 
     def init_update(self):
         wd = self.app.wd
@@ -40,7 +46,6 @@ class ContactHelper:
         self.change_contact_value("mobile", contact.mobile)
         self.change_contact_value("email", contact.email)
         self.change_contact_value("address2", contact.address2)
-        self.submit_form_creation()
 
     def change_contact_value(self, field_name, text):
         wd = self.app.wd
@@ -52,3 +57,7 @@ class ContactHelper:
     def init_contact_creation(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"))
