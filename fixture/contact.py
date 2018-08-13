@@ -1,4 +1,4 @@
-
+from model.contact import contact
 
 class ContactHelper:
 
@@ -34,6 +34,7 @@ class ContactHelper:
         wd = self.app.wd
         self.init_update()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
+        wd.find_element_by_link_text("home").click()
 
 
     def fill_form(self, contact):
@@ -62,3 +63,11 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        contacts = []
+        for element in wd.find_elements_by_name("entry"):
+            text = element.text
+            contacts.append(contact(firstname=text, middlename=text, lastname=text, company=text, home=text, address=text, mobile=text, email=text, address2=text))
+        return contacts
