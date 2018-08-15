@@ -11,3 +11,9 @@ class contact:
         self.mobile = mobile
         self.email = email
         self.address2 = address2
+
+    def __repr__(self):
+        return ("%s:%s") % (self.firstname)
+
+    def __eq__(self, other):
+        return self.firstname == other.firstname
