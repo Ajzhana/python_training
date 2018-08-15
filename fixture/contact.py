@@ -69,5 +69,6 @@ class ContactHelper:
         contacts = []
         for element in wd.find_elements_by_name("entry"):
             text = element.text
-            contacts.append(contact(firstname=text, middlename=text, lastname=text, company=text, home=text, address=text, mobile=text, email=text, address2=text))
+            id = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").get_attribute("value")
+            contacts.append(contact(firstname=text, middlename=text, lastname=text, company=text, home=text, address=text, mobile=text, email=text, address2=text, id = id))
         return contacts
