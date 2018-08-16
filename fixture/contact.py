@@ -62,13 +62,15 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
-        return len(wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"))
+        return len(wd.find_elements_by_name("selected[]"))
 
     def get_contact_list(self):
         wd = self.app.wd
         contacts = []
         for element in wd.find_elements_by_name("entry"):
-            text = element.text
-            id = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").get_attribute("value")
-            contacts.append(contact(firstname=text, middlename=text, lastname=text, company=text, home=text, address=text, mobile=text, email=text, address2=text, id = id))
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            cells = element.find_elements_by_css_selector("td")
+            text = cells[1].text
+            text2 = cells[2].text
+            contacts.append(contact(id=id, lastname=text, firstname=text2))
         return contacts
