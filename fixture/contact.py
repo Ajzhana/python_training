@@ -98,9 +98,9 @@ class ContactHelper:
                 cells = element.find_elements_by_css_selector("td")
                 text = cells[1].text
                 text2 = cells[2].text
-                all_phones = cells[5].text.splitlines()
-                self.contact_cache.append(contact(id=id, lastname=text, firstname=text2, homephone=all_phones[0],
-                                                  mobile=all_phones[1], workphone=all_phones[2], secondaryphone=all_phones[3]))
+                all_phones = cells[5].text
+                self.contact_cache.append(contact(id=id, lastname=text, firstname=text2,
+                                                  all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
