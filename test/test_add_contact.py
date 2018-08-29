@@ -11,7 +11,7 @@ def random_string(prefix, maxlen):
 
 testdata = [
     contact(firstname=random_string("firstname", 10),
-            middlename =random_string("middlename", 10),
+            middlename=random_string("middlename", 10),
             lastname=random_string("lastname", 10),
             company=random_string("company", 10),
             home=random_string("home", 10),
@@ -23,15 +23,15 @@ testdata = [
     for i in range(2)
    ]
 
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
-def test_add_contact(app, contact):
+@pytest.mark.parametrize("cont", testdata, ids=[repr(x) for x in testdata])
+def test_add_contact(app, cont):
     old_contacts = app.contact.get_contact_list()
     app.contact.init_contact_creation()
-    app.contact.fill_form(contact)
+    app.contact.fill_form(cont)
     app.contact.submit_form_creation()
     assert len(old_contacts) + 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    old_contacts.append(contact)
+    old_contacts.append(cont)
     assert sorted(old_contacts, key=contact.id_or_max) == sorted(new_contacts, key=contact.id_or_max)
 
 
