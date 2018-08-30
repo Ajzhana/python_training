@@ -11,7 +11,7 @@ def app(request):
     global fixture
     global target
     browser = request.config.getoption("--browser")
-    target = request.config.getoption("--target")
+    #target = request.config.getoption("--target")
     if target is None:
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
         with open(config_file) as f:
