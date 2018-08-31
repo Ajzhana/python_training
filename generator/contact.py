@@ -3,6 +3,7 @@ import random
 import string
 import os.path
 import jsonpickle
+import json
 import getopt
 import sys
 
@@ -37,11 +38,12 @@ testdata = [
             email=random_string("email", 10),
             address2=random_string("address2", 10))
 
-    for i in range(2)
+    for i in range(3)
    ]
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
 with open(file, "w") as out:
-    jsonpickle.set_encoder_options("json", indent=2)
-    out.write(jsonpickle.encode(testdata))
+    out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+    #jsonpickle.set_encoder_options("json", indent=2)
+    #out.write(jsonpickle.encode(testdata))
