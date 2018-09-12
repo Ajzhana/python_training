@@ -1,4 +1,4 @@
-from model.contact import contact
+from model.contact import Contact
 import re
 
 class ContactHelper:
@@ -24,6 +24,13 @@ class ContactHelper:
     def edit_contact_by_index(self,new_contact_data, index):
         wd = self.app.wd
         self.init_update_contact_by_index(index)
+        self.fill_form(new_contact_data)
+        self.submit_update()
+        self.return_home_page()
+
+    def edit_contact_by_id(self,new_contact_data, id):
+        wd = self.app.wd
+        self.init_update_contact_by_id(id)
         self.fill_form(new_contact_data)
         self.submit_update()
         self.return_home_page()
@@ -60,6 +67,19 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.init_update_contact_by_id(id)
+        #wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        #wd.switch_to_alert().accept()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
+        wd.find_element_by_link_text("home").click()
+        self.contact_cache = None
+
+    def init_update_contact_by_id(self, id):
+        wd = self.app.wd
+        self.return_home_page()
+        wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[%s]/td[8]/a/img" % (id + 2)).click()
 
     def fill_form(self, contact):
         wd = self.app.wd
@@ -102,7 +122,7 @@ class ContactHelper:
                 address = cells[3].text
                 all_email = cells[4].text
                 all_phones = cells[5].text
-                self.contact_cache.append(contact(id=id, lastname=text, firstname=text2,
+                self.contact_cache.append(Contact(id=id, lastname=text, firstname=text2,
                                                   address=address, all_email_from_home_page=all_email,
                                                   all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
@@ -121,7 +141,7 @@ class ContactHelper:
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
         address = wd.find_element_by_name("address").get_attribute("value")
-        return contact(firstname=firstname, lastname=lastname, id=id, address=address,
+        return Contact(firstname=firstname, lastname=lastname, id=id, address=address,
                        homephone=homephone, mobile=mobile, workphone=workphone,
                        secondaryphone=secondaryphone, email = email, email2 = email2, email3 =email3)
 
@@ -133,5 +153,5 @@ class ContactHelper:
         mobile = re.search("M: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
         secondaryphone = re.search("P: (.*)", text).group(1)
-        return contact(homephone=homephone, mobile=mobile, workphone=workphone,
+        return Contact(homephone=homephone, mobile=mobile, workphone=workphone,
                        secondaryphone=secondaryphone)

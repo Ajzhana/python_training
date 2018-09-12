@@ -1,4 +1,4 @@
-from model.contact import contact
+from model.contact import Contact
 import random
 import string
 import os.path
@@ -28,7 +28,7 @@ def random_string(prefix, maxlen):
 
 
 testdata = [
-    contact(firstname=random_string("firstname", 10),
+    Contact(firstname=random_string("firstname", 10),
             middlename=random_string("middlename", 10),
             lastname=random_string("lastname", 10),
             company=random_string("company", 10),
