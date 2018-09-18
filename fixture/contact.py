@@ -79,7 +79,7 @@ class ContactHelper:
     def init_update_contact_by_id(self, id):
         wd = self.app.wd
         self.return_home_page()
-        wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[%s]/td[8]/a/img" % (id + 2)).click()
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s'] img" % (id + 2)).click()
 
     def fill_form(self, contact):
         wd = self.app.wd
