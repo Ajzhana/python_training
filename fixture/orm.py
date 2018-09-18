@@ -3,6 +3,7 @@ from datetime import datetime
 from model.group import Group
 from model.contact import Contact
 from pymysql.converters import decoders
+from pymysql.converters import encoders, decoders, convert_mysql_timestamp
 
 class ORMFixture:
 
@@ -14,7 +15,7 @@ class ORMFixture:
         name = Optional(str, column='group_name')
         header = Optional(str, column='group_header')
         footer = Optional(str, column='group_footer')
-        contacts = Set(lambda:ORMFixture.ORMContact, table="address_in_groups", column="id", reverse="groups", lazy=True)
+        contacts = Set(lambda : ORMFixture.ORMContact, table="address_in_groups", column="id", reverse="groups", lazy=True)
 
     class ORMContact(db.Entity):
         _table_ = 'addressbook'
@@ -22,10 +23,14 @@ class ORMFixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         deprecated = Optional(datetime, column='deprecated')
-        groups = Set(lambda:ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
+        groups = Set(lambda : ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
 
     def __init__(self, host, name, user, password):
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        conv = encoders
+        conv.update(decoders)
+        conv[datetime] = convert_mysql_timestamp
+        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=conv)
+        #self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
         self.db.generate_mapping()
         sql_debug(True)
 
