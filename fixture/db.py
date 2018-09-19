@@ -39,16 +39,16 @@ class Dbfixture:
         return list
 
     def get_contact_list2(self):
-        list = []
+        self.list_contacts = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select lastname, firstname from addressbook")
+            cursor.execute("select id, firstname, lastname from addressbook")
             for row in cursor:
-                (lastname, firstname) = row
-                list.append(Contact(lastname=lastname, firstname=firstname))
+                (id,  firstname, lastname) = row
+                self.list_contacts.append(Contact(firstname=firstname, id=id, lastname=lastname))
         finally:
             cursor.close()
-        return list
+        return list(self.list_contacts)
 
 
 
