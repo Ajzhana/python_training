@@ -1,5 +1,6 @@
 from model.contact import Contact
 import re
+from selenium.webdriver.support.ui import Select
 
 class ContactHelper:
 
@@ -54,6 +55,11 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.contact_cache = None
 
+    def select_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_visible_text("1")
+
     def delete_contact(self):
         wd = self.app.wd
         self.delete_contact_by_index(0)
@@ -76,6 +82,13 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         self.contact_cache = None
 
+    def delete_contact_from_group_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_id("%s")% id.click()
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text("home").click()
+        self.contact_cache = None
+
     def init_update_contact_by_id(self, id):
         wd = self.app.wd
         self.return_home_page()
@@ -92,6 +105,8 @@ class ContactHelper:
         self.change_contact_value("mobile", contact.mobile)
         self.change_contact_value("email", contact.email)
         self.change_contact_value("address2", contact.address2)
+        self.change_contact_value("new_group", contact.new_group)
+
 
     def change_contact_value(self, field_name, text):
         wd = self.app.wd

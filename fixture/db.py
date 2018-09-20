@@ -38,6 +38,18 @@ class Dbfixture:
             cursor.close()
         return list
 
+    def get_contact_list3(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, lastname, firstname, group_id from addressbook")
+            for row in cursor:
+                (id, lastname, firstname, group_id) = row
+                list.append(Contact(id=id, lastname=lastname, firstname=firstname, group_id=group_id))
+        finally:
+            cursor.close()
+        return list
+
     def get_contact_list2(self):
         self.list_contacts = []
         cursor = self.connection.cursor()
