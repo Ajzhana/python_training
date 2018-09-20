@@ -54,10 +54,12 @@ class Dbfixture:
         self.list_contacts = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname from addressbook")
+            cursor.execute("select id, firstname, lastname, email, email2, email3, mobile, home, work, phone2 from addressbook")
             for row in cursor:
-                (id,  firstname, lastname) = row
-                self.list_contacts.append(Contact(firstname=firstname, id=id, lastname=lastname))
+                (id,  firstname, lastname, email, email2, email3, mobile, home, work, phone2) = row
+                self.list_contacts.append(Contact(firstname=firstname, id=id, lastname=lastname,
+                                                  homephone = home, mobile = mobile, workphone = work,
+                                                  secondaryphone = phone2, email = email, email2 = email2, email3 = email3))
         finally:
             cursor.close()
         return list(self.list_contacts)
